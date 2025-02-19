@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Http\Controllers\Controller;
 use App\Http\Requests\RegisterRequest;
 use App\Http\Requests\LoginRequest;
 use Illuminate\Support\Facades\Hash;
@@ -29,13 +30,24 @@ class AuthController extends Controller
             'email' => $request->email,
             'password' => Hash::make($request->password),
         ]);
+
+        Auth::login($user);
+
+        return redirect()->route('profile.edit');
     }
 
-    public function login(LoginRequest $request) {}
+    public function login(LoginRequest $request)
+    {
+        if (Auth::attempt(['email' => $request['email'], 'password' => $request['password']])) {
+            return redirect('profile');
+        } else {
+            return redirect('login')->with('result', 'メールアドレスまたはパスワードが間違っております');
+        }
+    }
 
     public function logout()
     {
         Auth::logout();
-        return redirect('home');
+        return redirect('index');
     }
 }
