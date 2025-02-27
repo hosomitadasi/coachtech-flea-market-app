@@ -49,9 +49,7 @@ class FortifyServiceProvider extends ServiceProvider
             return view('auth.register');
         });
 
-        Fortify::redirects([
-           return view('register') => ('/profile/edit')
-        ]);
+        Fortify::redirects('/profile');
 
         Fortify::loginView(function () {
             return view('auth.login');
