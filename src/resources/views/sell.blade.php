@@ -2,6 +2,66 @@
 
 @section('main')
 <div class="main">
+    <h1 class="form-ttl">画像の出品</h1>
+    <form action="/sell" method="POST">
+        @csrf
+        <div class="form-group">
+            <label for="name">商品画像</label>
+            <input type="name" id="name" name="name">
+            @error('')
+            <p class="error">{{ $message }}</p>
+            @enderror
+        </div>
+
+        <div class="form-group">
+            <label for="category">カテゴリー</label>
+
+            <p class="error">{{ $message }}</p>
+            @enderror
+        </div>
+
+        <div class="form-group">
+            <label for="address">商品の状態</label>
+            <input type="address" id="address" name="address">
+            @error('')
+            <p class="error">{{ $message }}</p>
+            @enderror
+        </div>
+
+        <div class="form-group">
+            <label for="building">商品名</label>
+            <input type="building" id="building" name="building">
+            @error('')
+            <p class="error">{{ $message }}</p>
+            @enderror
+        </div>
+
+        <div class="form-group">
+            <label for="name">ブランド名</label>
+            <input type="name" id="name" name="name">
+        </div>
+
+        <div class="form-group">
+            <label for="name">商品の説明</label>
+            <input type="name" id="name" name="name">
+            @error('')
+            <p class="error">{{ $message }}</p>
+            @enderror
+        </div>
+
+        <div class="form-group">
+            <label for="name">販売価格</label>
+            <input type="name" id="name" name="name">
+            @error('')
+            <p class="error">{{ $message }}</p>
+            @enderror
+        </div>
+
+        <button type="submit" class="form-btn">出品する</button>
+    </form>
+</div>
+
+<div class="main">
     <h1>商品の出品</h1>
     <form>
         <label>商品画像</label>

@@ -13,6 +13,95 @@ class ItemsTableSeeder extends Seeder
      */
     public function run()
     {
-        //
+
+        $param = [
+            'name' => '',
+            'price' => '',
+            'description'=> '',
+            'image_url' => '',
+            'condition_id' => '',
+        ];
+        DB::table('ites')->insert($param);
+
+        $param = [
+            'name' => '',
+            'price' => '',
+            'description' => '',
+            'image_url' => '',
+            'condition_id' => '',
+        ];
+        DB::table('ites')->insert($param);
+
+        $param = [
+            'name' => '',
+            'price' => '',
+            'description' => '',
+            'image_url' => '',
+            'condition_id' => '',
+        ];
+        DB::table('ites')->insert($param);
+
+        $param = [
+            'name' => '',
+            'price' => '',
+            'description' => '',
+            'image_url' => '',
+            'condition_id' => '',
+        ];
+        DB::table('ites')->insert($param);
+
+        $param = [
+            'name' => '',
+            'price' => '',
+            'description' => '',
+            'image_url' => '',
+            'condition_id' => '',
+        ];
+        DB::table('ites')->insert($param);
+
+        $param = [
+            'name' => '',
+            'price' => '',
+            'description' => '',
+            'image_url' => '',
+            'condition_id' => '',
+        ];
+        DB::table('ites')->insert($param);
+
+        $param = [
+            'name' => '',
+            'price' => '',
+            'description' => '',
+            'image_url' => '',
+            'condition_id' => '',
+        ];
+        DB::table('ites')->insert($param);
+
+        $param = [
+            'name' => '',
+            'price' => '',
+            'description' => '',
+            'image_url' => '',
+            'condition_id' => '',
+        ];
+        DB::table('ites')->insert($param);
+
+        $param = [
+            'name' => '',
+            'price' => '',
+            'description' => '',
+            'image_url' => '',
+            'condition_id' => '',
+        ];
+        DB::table('ites')->insert($param);
+
+        $param = [
+            'name' => '',
+            'price' => '',
+            'description' => '',
+            'image_url' => '',
+            'condition_id' => '',
+        ];
+        DB::table('ites')->insert($param);
     }
 }

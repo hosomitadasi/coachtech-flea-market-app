@@ -2,27 +2,20 @@
 
 @section('main')
 <div class="main">
-    <div class="tab-menu">
-        <a href="" class="">おすすめ</a>
-        @auth
-        <a href="" class="">マイリスト</a>
-        @else
-        <a href="auth.login">マイリスト</a>
-        @endauth
+    <div class="tab-container">
+        <button class="tab-button active" id="recommend-tab">おすすめ</button>
+        <button class="tab-button" id="wishlist-tab">マイリスト</button>
     </div>
-
-    <div class="product-list">
-        @foreach ($items as $item)
-        <div class="product-item">
-            <a href="">
-                <img src="" alt="">
-                <p>上に商品写真、ここに名前が入る</p>
-                @if ($item->is_sold)
-                <span class="sold-out">SOLD OUT</span>
-                @endif
-            </a>
-        </div>
+    <section class="product-list">
+        @foreach ($products as $product)
+        <article class="product-item">
+            <img src="{{ $product->image_url }}" alt="商品画像">
+            <h2>{{ $product->name }}</h2>
+            @if ($product->sold)
+            <span class="sold">Sold</span>
+            @endif
+        </article>
         @endforeach
-    </div>
+    </section>
 </div>
 @endsection

@@ -7,10 +7,11 @@ use App\Models\Mypage;
 
 class MypageController extends Controller
 {
-    public function Mypage()
+    public function indexProfile()
     {
 
     }
+
 
     public function toggleLike($item_id)
     {
@@ -30,9 +31,6 @@ class MypageController extends Controller
 
     public function addComment(Request $request, $item_id)
     {
-        $request->validate([
-            'content' => 'required|max:255',
-        ]);
 
         Comment::create([
             'user_id' => auth()->id(),
@@ -41,11 +39,6 @@ class MypageController extends Controller
         ]);
 
         return back();
-    }
-
-    public function indexProfile()
-    {
-
     }
 
     public function updateProfile()

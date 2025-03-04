@@ -9,14 +9,24 @@ class Item extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'user_id',
+        'name',
+        'brand_name',
+        'price',
+        'description',
+        'condition_id',
+        'image_url'
+    ];
+
     public function user()
     {
         return $this->belongsTo(User::class);
     }
 
-    public function category()
+    public function categories()
     {
-        return $this->belongsTo(Category::class);
+        return $this->belongsToMany(Category::class, 'item_category');
     }
 
     public function condition()
@@ -37,10 +47,5 @@ class Item extends Model
     public function purchase()
     {
         return $this->hasOne(Purchase::class);
-    }
-
-    public function address()
-    {
-        return $this->belongsTo(Address::class);
     }
 }

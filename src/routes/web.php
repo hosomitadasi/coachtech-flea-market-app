@@ -15,3 +15,4 @@ Route::get('/auth/login', [AuthController::class, 'createLogin'])->name('login')
 Route::get('/auth/register', [AuthController::class, 'createRegister'])->name('register');
 
 Route::get('buy', [TradeController::class, ''])->name('indexBuy');
+Route::get('sell', [TradeController::class, ''])->name('indexSell');

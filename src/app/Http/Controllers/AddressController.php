@@ -17,11 +17,6 @@ class AddressController extends Controller
 
     public function updateAddress(AddressRequest $request)
     {
-        $request->validate([
-            'zip_code' => 'required|string|max:10',
-            'address' => 'required|string|max:255',
-            'building' => 'nullable|string|max:255',
-        ]);
 
         $user = auth()->user();
 

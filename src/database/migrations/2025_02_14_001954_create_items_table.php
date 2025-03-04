@@ -6,11 +6,7 @@ use Illuminate\Support\Facades\Schema;
 
 class CreateItemsTable extends Migration
 {
-    /**
-     * Run the migrations.
-     *
-     * @return void
-     */
+
     public function up()
     {
         Schema::create('items', function (Blueprint $table) {
@@ -20,19 +16,15 @@ class CreateItemsTable extends Migration
             $table->string('brand_name')->nullable();
             $table->decimal('price', 10, 2);
             $table->text('description');
-            $table->unsignedBigInteger('category_id');
             $table->unsignedBigInteger('condition_id');
             $table->string('image_url');
-            $table->unsignedBigInteger('profiles_id')->nullable();
             $table->timestamps();
+
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('condition_id')->references('id')->on('conditions');
         });
     }
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
     public function down()
     {
         Schema::dropIfExists('items');
