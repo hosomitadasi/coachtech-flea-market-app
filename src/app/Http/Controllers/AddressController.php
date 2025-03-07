@@ -3,14 +3,14 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Address;
+use App\Models\User;
 
 class AddressController extends Controller
 {
     public function showAddressForm()
     {
         $user = auth()->user();
-        $address = Address::where('user_id', $user->id)->first();
+        $address = User::where('user_id', $user->id)->first();
 
         return view('address', compact('address'));
     }
@@ -20,7 +20,7 @@ class AddressController extends Controller
 
         $user = auth()->user();
 
-        Address::updateOrCreate(
+        User::updateOrCreate(
             ['user_id' => $user->id],
             [
                 'zip_code' => $request->zip_code,

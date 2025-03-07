@@ -14,5 +14,11 @@ Route::get('/detail/{item_id}', [ItemController::class, 'showDetail'])->name('it
 Route::get('/auth/login', [AuthController::class, 'createLogin'])->name('login');
 Route::get('/auth/register', [AuthController::class, 'createRegister'])->name('register');
 
-Route::get('buy', [TradeController::class, ''])->name('indexBuy');
-Route::get('sell', [TradeController::class, ''])->name('indexSell');
+Route::get('/sell', [TradeController::class, 'create'])->name('items.create');
+Route::post('/sell', [TradeController::class, 'store'])->name('items.store');
+
+Route::get('/buy/{item_id}', [TradeController::class, 'showPurchaseForm'])->name('buy.show');
+Route::post('/buy/{item_id}', [TradeController::class, 'purchase'])->name('buy.purchase');
+
+Route::get('/address/edit', [AddressController::class, 'edit'])->name('address.edit');
+Route::put('/address', [AddressController::class, 'update'])->name('address.update');
