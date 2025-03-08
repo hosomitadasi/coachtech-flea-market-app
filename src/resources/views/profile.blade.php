@@ -39,7 +39,7 @@
             <p class="error">{{ $message }}</p>
             @enderror
         </div>
-        <div class="profile-card__btn">
+        <div class="form-btn">
             <input type="submit" value="更新する" />
         </div>
     </form>

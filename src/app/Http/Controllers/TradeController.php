@@ -51,13 +51,11 @@ class TradeController extends Controller
         $item = Item::findOrFail($itemId);
         $user = Auth::user();
 
-        // 購入処理
         $purchase = new Purchase();
         $purchase->user_id = $user->id;
         $purchase->item_id = $itemId;
         $purchase->save();
 
-        // 商品のステータスを更新 (例: sold)
         $item->sold = true;
         $item->save();
 

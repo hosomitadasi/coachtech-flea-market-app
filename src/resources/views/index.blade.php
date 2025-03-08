@@ -7,11 +7,11 @@
         <button class="tab-button" id="wishlist-tab">マイリスト</button>
     </div>
     <section class="product-list">
-        @foreach ($products as $product)
+        @foreach ($items as $item)
         <article class="product-item">
-            <img src="{{ $product->image_url }}" alt="商品画像">
-            <h2>{{ $product->name }}</h2>
-            @if ($product->sold)
+            <img src="{{ $item->image_url }}" alt="商品画像">
+            <h2>{{ $item->name }}</h2>
+            @if ($item->sold)
             <span class="sold">Sold</span>
             @endif
         </article>
