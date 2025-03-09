@@ -8,7 +8,7 @@
         <div class="form-group">
             <label for="name">ユーザー名</label>
             <input type="name" id="name" name="name">
-            @error('')
+            @error('name')
             <p class="error">{{ $message }}</p>
             @enderror
         </div>
@@ -16,7 +16,7 @@
         <div class="form-group">
             <label for="email">メールアドレス</label>
             <input type="email" id="email" name="email">
-            @error('')
+            @error('email')
             <p class="error">{{ $message }}</p>
             @enderror
         </div>
@@ -24,7 +24,7 @@
         <div class="form-group">
             <label for="password">パスワード</label>
             <input type="password" id="password" name="password">
-            @error('')
+            @error('password')
             <p class="error">{{ $message }}</p>
             @enderror
         </div>
@@ -32,7 +32,7 @@
         <div class="form-group">
             <label for="email">確認用パスワード</label>
             <input type="password_confirmation" id="password_confirmation" name="password_confirmation">
-            @error('')
+            @error('password_confirmation')
             <p class="error">{{ $message }}</p>
             @enderror
         </div>
