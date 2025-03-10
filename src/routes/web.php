@@ -23,8 +23,10 @@ Route::middleware('auth')->group(function () {
     Route::post('detail/like', [MypageController::class, 'toggleLike'])->name('toggle.like');
     Route::post('detail/comment', [MypageController::class, 'addComment']);
 
-    Route::get('/profile', [MypageController::class, 'indexProfile']);
-    Route::get('edit', [MypageController::class, 'showEdit'])->name('show.edit');
+    Route::get('/profile', [MypageController::class, 'indexProfile'])->name('profile');
+    Route::get('/edit', [MypageController::class, 'showEdit'])->name('show.edit');
+    Route::put('/edit', [MypageController::class, 'updateProfile'])->name('update.profile');
+
 
     Route::get('/sell', [TradeController::class, 'create'])->name('items.create');
     Route::post('/sell', [TradeController::class, 'store'])->name('items.store');

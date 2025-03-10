@@ -2,46 +2,44 @@
 
 @section('main')
 <main class="main">
-    <form class="profile-card" action="" method="">
-        @csrf
-        <div class="profile-card__ttl">プロフィール設定</div>
-        <div class="profile-card__avatar">
-            <input type="submit" value="画像を選択する" />
+    <div class="profile-header">
+        <img src="{{ asset('storage/' . $user->avatar) }}" alt="プロフィール画像" class="profile-image">
+        <div class="profile-info">
+            <h2>{{ $user->name }}</h2>
+            <a href="{{ route('show.edit') }}" class="edit-profile-btn">プロフィールを編集</a>
         </div>
-        <div class="profile-card__item">
-            <p>ユーザー名</p>
-            <input class="profile-card__item__input" type="" placeholder="" name="" />
-            @error('')
-            <p class="error">{{ $message }}</p>
-            @enderror
+    </div>
+    <hr>
+    <div class="products">
+        <button class="tab" onclick="showProducts('sold')">出品した商品</button>
+        <button class="tab" onclick="showProducts('purchased')">購入した商品</button>
+    </div>
+    <div id="sold" class="product-list active">
+        @foreach($soldItems as $item)
+        <div class="product-item">
+            <img src="{{ asset('storage/' . $item->image_url) }}" alt="商品画像">
+            <p>{{ $item->name }}</p>
         </div>
-
-        <div class="profile-card__item">
-            <p>郵便番号</p>
-            <input class="profile-card__item__input" type="" placeholder="" name="" />
-            @error('')
-            <p class="error">{{ $message }}</p>
-            @enderror
+        @endforeach
+    </div>
+    <div id="purchased" class="product-list">
+        @foreach($purchasedItems as $item)
+        <div class="product-item">
+            <img src="{{ asset('storage/' . $item->image_url) }}" alt="商品画像">
+            <p>{{ $item->name }}</p>
         </div>
-
-        <div class="profile-card__item">
-            <p>住所</p>
-            <input class="profile-card__item__input" type="" placeholder="" name="" />
-            @error('')
-            <p class="error">{{ $message }}</p>
-            @enderror
-        </div>
-
-        <div class="profile-card__item">
-            <p>建物名</p>
-            <input class="profile-card__item__input" type="" placeholder="" name="" />
-            @error('')
-            <p class="error">{{ $message }}</p>
-            @enderror
-        </div>
-        <div class="form-btn">
-            <input type="submit" value="更新する" />
-        </div>
-    </form>
+        @endforeach
+    </div>
 </main>
+@endsection
+
+@section('scripts')
+<script>
+    function showProducts(type) {
+        document.getElementById('sold').classList.remove('active');
+        document.getElementById('purchased').classList.remove('active');
+        document.querySelector(`button[onclick="showProducts('${type}')"]`).classList.add('active');
+        document.getElementById(type).classList.add('active');
+    }
+</script>
 @endsection
