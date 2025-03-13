@@ -4,25 +4,28 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Item;
+use Illuminate\Support\Facades\Auth;
+use Carbon\Carbon;
 
 class ItemController extends Controller
 {
     public function index(Request $request)
     {
         $filter = $request->query('filter', 'recommend');
+        $items = Item::where('user_id', '!=', auth()->id())->get();
+        $wishlistItems = collect();
+
         if (auth()->check()) {
             if ($filter === 'mylist') {
-                $items = Item::whereHas('likes', function ($query) {
+                $wishlistItems = Item::whereHas('likes', function ($query) {
                     $query->where('user_id', auth()->id());
                 })->get();
             } else {
                 $items = Item::where('user_id', '!=', auth()->id())->get();
             }
-        } else {
-            $items = Item::where('user_id', '!=', auth()->id())->get();
         }
 
-        return view('index', compact('items', 'filter'));
+        return view('index', compact('items', 'filter', 'wishlistItems'));
     }
 
     public function search(Request $request)
@@ -39,9 +42,9 @@ class ItemController extends Controller
         return view('index', compact("items", "text"));
     }
 
-    public function showDetail($item_id)
+    public function show($id)
     {
-        $item = Item::find($item_id)->with('user', 'category', 'condition', 'comments.user', 'likes')->findOrFall($item_id);
+        $item = Item::with('user', 'categories', 'condition', 'comments.user', 'likes')->findOrFall($id);
         $today = Carbon::now()->toDateString();
 
         return view('detail', compact("item", "today"));

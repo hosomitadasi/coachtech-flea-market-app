@@ -48,4 +48,9 @@ class Item extends Model
     {
         return $this->hasOne(Purchase::class);
     }
+
+    public function getIsOwnAttribute()
+    {
+        return $this->user_id == auth()->id();
+    }
 }

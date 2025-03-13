@@ -33,7 +33,7 @@ class AuthController extends Controller
 
         Auth::login($user);
 
-        return redirect()->route('profile.edit');
+        return redirect()->route('edit');
     }
 
     public function login(LoginRequest $request)

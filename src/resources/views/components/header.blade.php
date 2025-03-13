@@ -9,7 +9,7 @@
         @else
         <a href="{{ route('logout') }}" class="header-button">ログアウト</a>
         <a href="{{ route('profile') }}" class="header-button">マイページ</a>
-        <a href="{{ route('item.create') }}" class="header-button white-button">出品</a>
+        <a href="{{ route('items.create') }}" class="header-button white-button">出品</a>
         @endguest
     </div>
 </header>

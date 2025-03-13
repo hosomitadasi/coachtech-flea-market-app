@@ -9,13 +9,14 @@ use App\Http\Controllers\TradeController;
 use Faker\Guesser\Name;
 
 Route::get('/', [ItemController::class, 'index']);
-Route::get('/detail/{item_id}', [ItemController::class, 'showDetail'])->name('item.detail');
+Route::get('/detail/{id}', [ItemController::class, 'show'])->name('item.detail');
 
 Route::get('/auth/login', [AuthController::class, 'createLogin'])->name('login');
 Route::post('/login', [AuthController::class, 'Login']);
 
 Route::get('/auth/register', [AuthController::class, 'createRegister'])->name('register');
 Route::post('/register', [AuthController::class, 'store']);
+Route::put('/edit', [MypageController::class, 'updateProfile'])->name('update.profile');
 
 Route::middleware('auth')->group(function () {
     Route::get('/logout', [AuthController::class, 'logout']);
