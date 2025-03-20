@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Requests\AddressRequest;
+use App\Http\Requests\ExhibitionRequest;
+use App\Http\Requests\PurchaseRequest;
 use App\Models\Category;
 use App\Models\Condition;
 use App\Models\Item;
@@ -10,14 +13,14 @@ use Illuminate\Support\Facades\Auth;
 
 class TradeController extends Controller
 {
-    public function create()
+    public function showSellsForm()
     {
         $categories = Category::all();
         $conditions = Condition::all();
         return view('sell', compact('categories', 'conditions'));
     }
 
-    public function store(Request $request)
+    public function store(ExhibitionRequest $request)
     {
         $item = new Item();
         $item->user_id = Auth::id();
@@ -60,5 +63,30 @@ class TradeController extends Controller
         $item->save();
 
         return redirect()->route('item.detail', ['item_id' => $itemId])->with('success', '購入が完了しました');
+    }
+
+    public function showAddressForm()
+    {
+        $user = auth()->user();
+        $address = User::where('user_id', $user->id)->first();
+
+        return view('address', compact('address'));
+    }
+
+    public function updateAddress(AddressRequest $request)
+    {
+
+        $user = auth()->user();
+
+        User::updateOrCreate(
+            ['user_id' => $user->id],
+            [
+                'zip_code' => $request->zip_code,
+                'address' => $request->address,
+                'building' => $request->building,
+            ]
+        );
+
+        return redirect()->route('buy')->with('success', '住所を更新しました');
     }
 }

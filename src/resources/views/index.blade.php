@@ -1,57 +1,36 @@
 @extends('layouts.app')
 
 @section('main')
-<div class="main">
-    <div class="tab-container">
-        <button class="tab-button active" id="recommend-tab" onclick="showTab('recommend')">おすすめ</button>
-        <button class="tab-button" id="wishlist-tab" onclick="showTab('wishlist')">マイリスト</button>
-    </div>
-
-    <section class="product-list" id="recommend-list">
-        @foreach ($items as $item)
-        @if (!$item->is_own)
-        <article class="product-item" onclick="location.href='{{ route('item.detail', ['id' => $item->id]) }}'">
-            <img src="{{ $item->image_url }}" alt="商品画像">
-            <h2>{{ $item->name }}</h2>
-            @if ($item->sold)
-            <span class="sold">Sold</span>
-            @endif
-        </article>
-        @endif
-        @endforeach
-    </section>
-    @auth
-    <section class="product-list" id="wishlist-list" style="display: none;">
-        @foreach ($wishlistItems ?? [] as $item)
-        <article class="product-item" onclick="location.href='{{ route('item.detail', ['id' => $item->id]) }}'">
-            <img src="{{ $item->image_url }}" alt="商品画像">
-            <h2>{{ $item->name }}</h2>
-            @if ($item->sold)
-            <span class="sold">Sold</span>
-            @endif
-        </article>
-        @endforeach
-    </section>
-    @endauth
-
+<div class="toppage-list">
+    <button class="tab" id="recommend-tab" onclick="toggleTab('recommend')">おすすめ</button>
+    <button class="tab" id="mylist-tab" onclick="toggleTab('mylist')">マイリスト</button>
 </div>
-@endsection
+<hr class="divider">
+<div class="products-list" id="products-list">
+    @foreach ($items as $item)
+    <div class="products-card">
+        <a href="{{ route('item.detail', ['id' => $item->id]) }}">
+            <img src="{{ $item->image_url }}" alt="{{ $item->name }}" class="product-image">
+        </a>
+        <div class="product-name">{{ $item->name }}</div>
+    </div>
+    @endforeach
+</div>
 
-@section('scripts')
 <script>
-    function showTab(tab) {
-        document.getElementById('recommend-tab').classList.remove('active');
-        document.getElementById('wishlist-tab').classList.remove('active');
-        document.getElementById('recommend-list').style.display = 'none';
-        document.getElementById('wishlist-list').style.display = 'none';
-
+    function toggleTab(tab) {
+        const recommendTab = document.getElementById('recommend-tab');
+        const mylistTab = document.getElementById('mylist-tab');
         if (tab === 'recommend') {
-            document.getElementById('recommend-tab').classList.add('active');
-            document.getElementById('recommend-list').style.display = 'block';
+            recommendTab.style.color = '#ff0000';
+            mylistTab.style.color = '#5f5f5f';
+            // TODO: Fetch and display recommended items
         } else {
-            document.getElementById('wishlist-tab').classList.add('active');
-            document.getElementById('wishlist-list').style.display = 'block';
+            recommendTab.style.color = '#5f5f5f';
+            mylistTab.style.color = '#ff0000';
+            // TODO: Fetch and display items in my list
         }
     }
 </script>
+
 @endsection

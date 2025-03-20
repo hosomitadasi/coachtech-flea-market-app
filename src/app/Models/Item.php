@@ -19,6 +19,14 @@ class Item extends Model
         'image_url'
     ];
 
+    protected $appends = ['is_own'];
+
+    public function getIsOwnAttribute()
+    {
+        \Log::info('auth user:', ['user' => auth()->user()]);
+        return optional(auth()->user())->id === $this->user_id;
+    }
+
     public function user()
     {
         return $this->belongsTo(User::class);
@@ -49,8 +57,4 @@ class Item extends Model
         return $this->hasOne(Purchase::class);
     }
 
-    public function getIsOwnAttribute()
-    {
-        return $this->user_id == auth()->id();
-    }
 }

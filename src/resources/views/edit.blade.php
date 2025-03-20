@@ -1,47 +1,59 @@
 @extends('layouts.app')
 
 @section('main')
-<div class="main">
-    <h1 class="form-ttl">プロフィール編集画面</h1>
-    <form action="{{ route('update.profile') }}" method="POST" enctype="multipart/form-data">
-        @csrf
-        @method('PUT')
-        <div class="form-group">
-            <img src="{{ asset('storage/' . $user->avatar) }}" alt="ユーザーアイコン" class="user-avatar">
-            <input type="file" name="profile_image" class="select-btn">
-            @error('profile_image')
-            <p class="error">{{ $message }}</p>
-            @enderror
+<div class="product-detail">
+    <div class="product-image-area">
+        <img src="{{ $item->img_url }}" alt="{{ $item->name }}">
+    </div>
+    <div class="product-description-area">
+        <div class="product-title">
+            <div class="product-name">{{ $item->name }}</div>
+            @if($item->brand)
+            <div class="product-brand">{{ $item->brand }}</div>
+            @endif
+            <div class="product-price">￥{{ $item->price }}（税込）</div>
         </div>
-        <div class="form-group">
-            <label for="name">ユーザー名</label>
-            <input type="text" id="name" name="name" value="{{ $user->name }}">
-            @error('name')
-            <p class="error">{{ $message }}</p>
-            @enderror
+        <div class="product-actions">
+            <div class="action-icon">
+                <img src="{{ asset('images/comment-icon.png') }}" alt="コメント">
+                <div class="action-count">{{ $item->comments_count }}</div>
+            </div>
+            <div class="action-icon">
+                <img src="{{ asset('images/like-icon.png') }}" alt="いいね">
+                <div class="action-count">{{ $item->likes_count }}</div>
+            </div>
         </div>
-        <div class="form-group">
-            <label for="zip_code">郵便番号</label>
-            <input type="text" id="zip_code" name="zip_code" value="{{ $user->zip_code }}">
-            @error('zip_code')
-            <p class="error">{{ $message }}</p>
-            @enderror
+        <div class="purchase-area">
+            <div class="purchase-box">
+                <a href="{{ route('buy', $item->id) }}" class="purchase-link">購入手続きへ</a>
+            </div>
         </div>
-        <div class="form-group">
-            <label for="address">住所</label>
-            <input type="text" id="address" name="address" value="{{ $user->address }}">
-            @error('address')
-            <p class="error">{{ $message }}</p>
-            @enderror
+        <div class="product-description">
+            <div class="description-title">商品説明</div>
+            <div class="description-content">{{ $item->description }}</div>
         </div>
-        <div class="form-group">
-            <label for="building">建物名</label>
-            <input type="text" id="building" name="building" value="{{ $user->building }}">
-            @error('building')
-            <p class="error">{{ $message }}</p>
-            @enderror
+        <div class="product-info">
+            <div class="info-title">商品の情報</div>
+            <div class="category-info">カテゴリー：{{ $item->category }}</div>
+            <div class="product-condition">状態：{{ $item->condition }}</div>
         </div>
-        <button type="submit" class="form-btn">更新する</button>
-    </form>
+        <div class="product-comments">
+            <div class="comments-title">コメント（{{ $item->comments_count }}）</div>
+            <div class="comment-list">
+                @foreach($item->comments as $comment)
+                <div class="comment-item">{{ $comment->content }}</div>
+                @endforeach
+            </div>
+            @if(Auth::check())
+            <div class="comment-input">
+                <form action="{{ route('comment', $item->id) }}" method="POST">
+                    @csrf
+                    <textarea name="content" rows="4" placeholder="コメントを入力"></textarea>
+                    <button type="submit">コメントを投稿</button>
+                </form>
+            </div>
+            @endif
+        </div>
+    </div>
 </div>
 @endsection
