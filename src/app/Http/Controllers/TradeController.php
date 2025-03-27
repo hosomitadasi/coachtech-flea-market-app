@@ -9,84 +9,73 @@ use App\Http\Requests\PurchaseRequest;
 use App\Models\Category;
 use App\Models\Condition;
 use App\Models\Item;
+use App\Models\Purchase;
 use Illuminate\Support\Facades\Auth;
 
 class TradeController extends Controller
 {
-    public function showSellsForm()
+        public function showSellForm($item_id)
     {
         $categories = Category::all();
         $conditions = Condition::all();
+
         return view('sell', compact('categories', 'conditions'));
     }
 
-    public function store(ExhibitionRequest $request)
+        public function create(ExhibitionRequest $request)
     {
         $item = new Item();
         $item->user_id = Auth::id();
-        $item->name = $request->name;
+        $item->name = $request->item_name;
         $item->brand_name = $request->brand_name;
         $item->price = $request->price;
         $item->description = $request->description;
-        $item->condition_id = $request->condition_id;
+        $item->condition_id = $request->condition;
 
-        if ($request->hasFile('image')) {
-            $item->image_url = $request->file('image')->store('images', 'public');
+        if ($request->hasFile('item_image')) {
+            $path = $request->file('item_image')->store('items', 'public');
+            $item->image_url = $path;
         }
 
         $item->save();
 
-        $categoryIds = explode(',', $request->categories);
-        $item->categories()->attach($categoryIds);
+        $item->categories()->attach($request->category);
 
-        return redirect()->route('item.detail', ['item_id' => $item->id]);
+        return redirect()->route('profile');
     }
 
-    public function showPurchaseForm($itemId)
+    public function showBuyForm($item_id)
     {
-        $item = Item::findOrFail($itemId);
-        $user = Auth::user();
-        return view('buy', compact('item', 'user'));
+        $item = Item::findOrFall($item_id);
+        session(['item_id' => $item_id]);
+
+        return view('buy', compact('item') );
     }
 
-    public function purchase(PurchaseRequest $request, $itemId)
+    public function store(PurchaseRequest $request)
     {
-        $item = Item::findOrFail($itemId);
-        $user = Auth::user();
-
         $purchase = new Purchase();
-        $purchase->user_id = $user->id;
-        $purchase->item_id = $itemId;
+        $purchase->user_id = Auth::id();
+        $purchase->item_id = $request->item_id;
         $purchase->save();
 
-        $item->sold = true;
-        $item->save();
-
-        return redirect()->route('item.detail', ['item_id' => $itemId])->with('success', '購入が完了しました');
+        return redirect()->route('index')->with('success', '購入が完了しました');
     }
 
     public function showAddressForm()
     {
-        $user = auth()->user();
-        $address = User::where('user_id', $user->id)->first();
-
-        return view('address', compact('address'));
+        return view('address');
     }
 
     public function updateAddress(AddressRequest $request)
     {
+        $user = Auth::user();
+        $user->zip_code = $request->zip_code;
+        $user->address = $request->address;
+        $user->building = $request->building;
+        $user->save();
 
-        $user = auth()->user();
-
-        User::updateOrCreate(
-            ['user_id' => $user->id],
-            [
-                'zip_code' => $request->zip_code,
-                'address' => $request->address,
-                'building' => $request->building,
-            ]
-        );
-
-        return redirect()->route('buy')->with('success', '住所を更新しました');
+        return redirect()->route('buy.show', ['item_id' => session('item_id')]);
     }
+
 }

@@ -13,17 +13,32 @@ use Laravel\Fortify\Http\Requests\LoginRequest as RequestsLoginRequest;
 
 class AuthController extends Controller
 {
-    public function createRegister()
-    {
-        return view('auth.register');
-    }
-
-    public function createLogin()
+    public function showLoginForm()
     {
         return view('auth.login');
     }
 
-    public function store(RegisterRequest $request)
+    public function login(LoginRequest $request)
+    {
+        $credentials = $request->only('email', 'password');
+
+        if (Auth::attempt($credentials)) {
+            $request->session()->regenerate();
+
+            return redirect()->intended(route('index'));
+        }
+
+        return back()->withErrors([
+            'email' => 'The provided credentials do not match our records.',
+        ]);
+    }
+
+    public function showRegisterForm()
+    {
+        return view('auth.register');
+    }
+
+    public function register(RegisterRequest $request)
     {
         $user = User::create([
             'name' => $request->name,
@@ -33,21 +48,17 @@ class AuthController extends Controller
 
         Auth::login($user);
 
-        return redirect()->route('edit');
+        return redirect()->route('profile.edit');
     }
 
-    public function login(LoginRequest $request)
-    {
-        if (Auth::attempt(['email' => $request['email'], 'password' => $request['password']])) {
-            return redirect('profile');
-        } else {
-            return redirect('login')->with('result', 'メールアドレスまたはパスワードが間違っております');
-        }
-    }
-
-    public function logout()
+    public function logout(Request $request)
     {
         Auth::logout();
-        return redirect('index');
+
+        $request->session()->invalidate();
+
+        $request->session()->regenerateToken();
+
+        return redirect(route('index'));
     }
 }

@@ -9,7 +9,7 @@
 <div class="products-list" id="products-list">
     @foreach ($items as $item)
     <div class="products-card">
-        <a href="{{ route('item.detail', ['id' => $item->id]) }}">
+        <a href="{{ route('detail', ['id' => $item->id]) }}">
             <img src="{{ $item->image_url }}" alt="{{ $item->name }}" class="product-image">
         </a>
         <div class="product-name">{{ $item->name }}</div>
@@ -24,11 +24,9 @@
         if (tab === 'recommend') {
             recommendTab.style.color = '#ff0000';
             mylistTab.style.color = '#5f5f5f';
-            // TODO: Fetch and display recommended items
         } else {
             recommendTab.style.color = '#5f5f5f';
             mylistTab.style.color = '#ff0000';
-            // TODO: Fetch and display items in my list
         }
     }
 </script>
