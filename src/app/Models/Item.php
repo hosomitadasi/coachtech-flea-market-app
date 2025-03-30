@@ -57,4 +57,9 @@ class Item extends Model
         return $this->hasOne(Purchase::class);
     }
 
+    public function purchases()
+    {
+        return $this->hasMany(Purchase::class);
+    }
+
 }

@@ -7,46 +7,48 @@
     </div>
 
     <div class="product-description-area">
-
         <div class="product-title">
             <h1>{{ $item->name }}</h1>
             @if ($item->brand_name)
             <h2>{{ $item->brand_name }}</h2>
             @endif
-            <p>￥{{ number_format($item->price) }}（税込）</p>
+            <p class="price">￥{{ number_format($item->price) }}（税込）</p>
         </div>
 
         <div class="product-actions">
             <div class="action-icons">
                 <div class="like-icon">
-                    <form action="{{ route('like', ['id' => $item->id]) }}" method="POST">
+                    @php
+                    $isLiked = Auth::check() ? App\Http\Controllers\LikeController::isLiked($item->id) : false;
+                    @endphp
+                    <form action="{{ $isLiked ? route('unlike', ['id' => $item->id]) : route('like', ['id' => $item->id]) }}" method="POST">
                         @csrf
-                        @method('POST')
+                        @if($isLiked)
+                        @method('DELETE')
+                        @endif
                         <button type="submit">
-                            <img src="/img/unlike.png" class="like-btn">
+                            <img src="{{ $isLiked ? '/img/like.png' : '/img/unlike.png' }}" class="like-btn">
                         </button>
-                        <p>{{ $likesCount }}</p>
+                        <span>{{ $likesCount }}</span>
                     </form>
                 </div>
                 <div class="comment-icon">
-                    <img src="{{ asset('chat-bubble.png') }}">
+                    <img src="/img/chat-bubble.png">
                     <span>{{ $commentsCount }}</span>
                 </div>
             </div>
-        </div>
-
-        <div class="purchase-area">
-            <button class="purchase-btn" onclick="location.href='{{ Auth::check() ? route('buy.show', ['item_id' => $item->id]) : route('login') }}'">購入手続きへ</button>
+            <button class="purchase-btn" onclick="location.href='{{ Auth::check() ? route('purchase', ['item_id' => $item->id]) : route('login') }}'">購入手続きへ</button>
         </div>
 
         <div class="product-description">
             <h3>商品説明</h3>
             <p>{{ $item->description }}</p>
         </div>
+
         <div class="product-info">
             <h3>商品の情報</h3>
-            <div class="category-info">カテゴリー {{ implode(', ', $item->categories->pluck('name')->toArray()) }}</div>
-            <div class="product-condition">商品の状態 {{ $item->condition->name }}</div>
+            <span class="category-badge">{{ implode(', ', $item->categories->pluck('name')->toArray()) }}</span>
+            <span class="condition-badge">{{ $item->condition->name }}</span>
         </div>
 
         <div class="product-comments">
@@ -58,18 +60,15 @@
                 </div>
                 @endforeach
             </div>
-            @auth
             <div class="comment-form">
                 <h3>商品へのコメント</h3>
                 <form action="{{ route('comment', ['id' => $item->id]) }}" method="POST">
                     @csrf
-                    <textarea name="comment" rows="5"></textarea>
-                    <button type="submit">送信</button>
+                    <textarea name="comment" rows="4"></textarea>
+                    <button type="submit" class="comment-btn" onclick="return {{ Auth::check() ? 'true' : "location.href='" . route('login') . "'" }}">コメントを送信する</button>
                 </form>
             </div>
-            @endauth
         </div>
-
     </div>
 </div>
 @endsection

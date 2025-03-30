@@ -21,7 +21,7 @@
     <div class="shipping-address">
         <label for="shipping_address">配送先</label>
         <p>{{ Auth::user()->zip_code }}, {{ Auth::user()->address }}, {{ Auth::user()->building }}</p>
-        <a href="{{ route('address.edit') }}">変更する</a>
+        <a href="{{ route('address') }}">変更する</a>
     </div>
     <hr class="divider">
     <div class="order-summary">

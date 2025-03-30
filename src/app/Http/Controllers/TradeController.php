@@ -44,12 +44,12 @@ class TradeController extends Controller
         return redirect()->route('profile');
     }
 
-    public function showBuyForm($item_id)
+    public function showPurchaseForm($item_id)
     {
-        $item = Item::findOrFall($item_id);
+        $item = Item::findOrFail($item_id);
         session(['item_id' => $item_id]);
 
-        return view('buy', compact('item') );
+        return view('purchase', compact('item') );
     }
 
     public function store(PurchaseRequest $request)

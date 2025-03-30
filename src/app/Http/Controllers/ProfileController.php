@@ -4,18 +4,22 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\Http\Requests\AddressRequest;
+use App\Http\Requests\ProfileRequest;
 
 class ProfileController extends Controller
 {
-    public function showProfile()
+    public function showMypage(Request $request)
     {
+        $user = Auth::user();
+        $soldItems = $user->items;
+        $purchasedItems = $user->purchases;
 
+        return view('mypage', compact('user', 'soldItems', 'purchasedItems'));
     }
 
-    public function edit()
+    public function showProfile()
     {
-        return view('edit');
+        return view('profile');
     }
 
     public function update(ProfileRequest $request)
@@ -34,15 +38,6 @@ class ProfileController extends Controller
         $user->save();
 
         return redirect()->route('index');
-    }
-
-    public function index()
-    {
-        $user = Auth::user();
-        $soldItems = $user->items;
-        $purchasedItems = $user->purchases;
-
-        return view('profile', compact('user', 'soldItems', 'purchasedItems'));
     }
 
 }

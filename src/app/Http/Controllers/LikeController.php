@@ -26,4 +26,9 @@ class LikeController extends Controller
 
         return back();
     }
+
+    public function isLiked($id)
+    {
+        return Like::where('user_id', Auth::id())->where('item_id', $id)->exists();
+    }
 }

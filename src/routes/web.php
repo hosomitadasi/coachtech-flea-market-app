@@ -7,11 +7,10 @@ use App\Http\Controllers\ItemController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TradeController;
 use App\Http\Controllers\LikeController;
-use Faker\Guesser\Name;
 
 Route::get('/', [ItemController::class, 'index'])->name('index');
 Route::get('/search', [ItemController::class, 'search']);
-Route::get('/detail/{id}', [ItemController::class, 'show'])->name('detail');
+Route::get('/item/{item_id}', [ItemController::class, 'showDetailForm'])->name('detail');
 
 Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [AuthController::class, 'login']);
@@ -21,17 +20,17 @@ Route::post('/register', [AuthController::class, 'register']);
 Route::middleware('auth')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout']);
 
-    Route::get('/profile', [ProfileController::class, 'showProfile'])->name('profile');
-    Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::put('/edit', [ProfileController::class, 'update'])->name('edit.update');
+    Route::get('/mypage', [ProfileController::class, 'showMypage'])->name('mypage');
+    Route::get('/mypage/profile', [ProfileController::class, 'showProfile'])->name('profile');
+    Route::post('/mypage/profile', [ProfileController::class, 'update'])->name('profile.update');
 
     Route::get('/sell', [TradeController::class, 'showSellForm'])->name('sell');
     Route::post('/sell', [TradeController::class, 'create']);
 
-    Route::get('/buy/{item_id}', [TradeController::class, 'showBuyForm'])->name('buy');
-    Route::post('/buy', [TradeController::class, 'store']);
-    Route::get('/buy/address', [TradeController::class, 'showAddressForm'])->name('address');
-    Route::put('/address', [TradeController::class, 'updateAddress'])->name('address.update');
+    Route::get('/purchase/{item_id}', [TradeController::class, 'showPurchaseForm'])->name('purchase');
+    Route::post('/purchase/{item_id}', [TradeController::class, 'store']);
+    Route::get('/purchase/address/{item_id}', [TradeController::class, 'showAddressForm'])->name('address');
+    Route::post('/address', [TradeController::class, 'updateAddress'])->name('address.update');
 
     Route::post('/like/{id}', [LikeController::class, 'store'])->name('like');
     Route::delete('/like/{id}', [LikeController::class, 'destroy'])->name('unlike');

@@ -1,45 +1,47 @@
 @extends('layouts.app')
 
 @section('main')
-<main class="main">
-    <div class="profile-header">
-        <img src="{{ asset('storage/' . $user->avatar) }}" alt="プロフィール画像" class="profile-image">
-        <div class="profile-info">
-            <h2>{{ $user->name }}</h2>
-            <a href="{{ route('show.edit') }}" class="edit-profile-btn">プロフィールを編集</a>
+<div class="profile-content">
+    <h1 class="form-ttl">プロフィール設定</h1>
+    <form action="{{ route('profile.update') }}" method="POST" enctype="multipart/form-data">
+        @csrf
+        @method('PUT')
+        <div class="form-group">
+            <label for="avatar">ユーザー画像</label>
+            <input type="file" id="avatar" name="avatar">
+            @error('avatar')
+            <p class="error">{{ $message }}</p>
+            @enderror
         </div>
-    </div>
-    <hr>
-    <div class="products">
-        <button class="tab" onclick="showProducts('sold')">出品した商品</button>
-        <button class="tab" onclick="showProducts('purchased')">購入した商品</button>
-    </div>
-    <div id="sold" class="product-list active">
-        @foreach($soldItems as $item)
-        <div class="product-item">
-            <img src="{{ asset('storage/' . $item->image_url) }}" alt="商品画像">
-            <p>{{ $item->name }}</p>
+        <div class="form-group">
+            <label for="name">ユーザー名</label>
+            <input type="text" id="name" name="name" value="{{ old('name', auth()->user()->name) }}" required>
+            @error('name')
+            <p class="error">{{ $message }}</p>
+            @enderror
         </div>
-        @endforeach
-    </div>
-    <div id="purchased" class="product-list">
-        @foreach($purchasedItems as $item)
-        <div class="product-item">
-            <img src="{{ asset('storage/' . $item->image_url) }}" alt="商品画像">
-            <p>{{ $item->name }}</p>
+        <div class="form-group">
+            <label for="zip_code">郵便番号</label>
+            <input type="text" id="zip_code" name="zip_code" value="{{ old('zip_code', auth()->user()->zip_code) }}">
+            @error('zip_code')
+            <p class="error">{{ $message }}</p>
+            @enderror
         </div>
-        @endforeach
-    </div>
-</main>
-@endsection
-
-@section('scripts')
-<script>
-    function showProducts(type) {
-        document.getElementById('sold').classList.remove('active');
-        document.getElementById('purchased').classList.remove('active');
-        document.querySelector(`button[onclick="showProducts('${type}')"]`).classList.add('active');
-        document.getElementById(type).classList.add('active');
-    }
-</script>
+        <div class="form-group">
+            <label for="address">住所</label>
+            <input type="text" id="address" name="address" value="{{ old('address', auth()->user()->address) }}">
+            @error('address')
+            <p class="error">{{ $message }}</p>
+            @enderror
+        </div>
+        <div class="form-group">
+            <label for="building">建物名</label>
+            <input type="text" id="building" name="building" value="{{ old('building', auth()->user()->building) }}">
+            @error('building')
+            <p class="error">{{ $message }}</p>
+            @enderror
+        </div>
+        <button type="submit" class="form-btn">更新する</button>
+    </form>
+</div>
 @endsection
