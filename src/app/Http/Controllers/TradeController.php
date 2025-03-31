@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Auth;
 
 class TradeController extends Controller
 {
-        public function showSellForm($item_id)
+        public function showSellForm()
     {
         $categories = Category::all();
         $conditions = Condition::all();

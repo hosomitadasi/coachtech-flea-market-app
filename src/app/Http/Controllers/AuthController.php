@@ -48,7 +48,7 @@ class AuthController extends Controller
 
         Auth::login($user);
 
-        return redirect()->route('profile');
+        return redirect()->route('profile.edit', ['source' => 'register']);
     }
 
     public function logout(Request $request)

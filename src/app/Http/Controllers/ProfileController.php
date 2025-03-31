@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\AddressRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\AddressRequestRequest;
 use App\Http\Requests\ProfileRequest;
 
 class ProfileController extends Controller
@@ -17,27 +19,35 @@ class ProfileController extends Controller
         return view('mypage', compact('user', 'soldItems', 'purchasedItems'));
     }
 
-    public function showProfile()
+    public function showProfile(Request $request)
     {
-        return view('profile');
+        $source = $request->query('source');
+        $user = Auth::user();
+
+        return view('profile', compact('user', 'source'));
     }
 
-    public function update(ProfileRequest $request)
+    public function update(ProfileRequest $profileRequest, AddressRequest $addressRequest)
     {
         $user = Auth::user();
-        $user->name = $request->name;
-        $user->zip_code = $request->zip_code;
-        $user->address = $request->address;
-        $user->building = $request->building;
+        $user->name = $profileRequest->name;
+        $user->zip_code = $addressRequest->zip_code;
+        $user->address = $addressRequest->address;
+        $user->building = $addressRequest->building;
 
-        if ($request->hasFile('avatar')) {
-            $path = $request->file('avatar')->store('avatars', 'public');
+        if ($profileRequest->hasFile('avatar')) {
+            $path = $profileRequest->file('avatar')->store('avatars', 'public');
             $user->avatar = $path;
         }
 
         $user->save();
 
-        return redirect()->route('index');
+        $source = $profileRequest->query('source');
+        if ($source === 'register') {
+            return redirect()->route('index');
+        }
+
+        return redirect()->route('mypage');
     }
 
 }

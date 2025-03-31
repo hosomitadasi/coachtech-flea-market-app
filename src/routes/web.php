@@ -14,6 +14,7 @@ Route::get('/item/{item_id}', [ItemController::class, 'showDetailForm'])->name('
 
 Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [AuthController::class, 'login']);
+
 Route::get('/register', [AuthController::class, 'showRegisterForm'])->name('register');
 Route::post('/register', [AuthController::class, 'register']);
 
@@ -21,8 +22,9 @@ Route::middleware('auth')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout']);
 
     Route::get('/mypage', [ProfileController::class, 'showMypage'])->name('mypage');
-    Route::get('/mypage/profile', [ProfileController::class, 'showProfile'])->name('profile');
-    Route::post('/mypage/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::get('/mypage/profile', [ProfileController::class, 'showProfile'])->name('profile.edit');
+    Route::put('/profile/update', [ProfileController::class, 'update'])->name('profile.update');
+
 
     Route::get('/sell', [TradeController::class, 'showSellForm'])->name('sell');
     Route::post('/sell', [TradeController::class, 'create']);

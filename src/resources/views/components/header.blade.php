@@ -8,7 +8,7 @@
         </div>
         <nav class="header-nav">
             <a href="{{ route('login') }}">{{ Auth::check() ? 'ログアウト' : 'ログイン' }}</a>
-            <a href="{{ Auth::check() ? route('profile') : route('login') }}">マイページ</a>
+            <a href="{{ Auth::check() ? route('mypage') : route('login') }}">マイページ</a>
             <a href="{{ Auth::check() ? route('sell') : route('login') }}">出品</a>
         </nav>
         @endif

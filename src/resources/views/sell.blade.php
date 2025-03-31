@@ -8,8 +8,9 @@
         <div class="form-group">
             <label for="item_image">商品画像</label>
             <div class="image-upload">
-                <input type="file" id="item_image" name="item_image" required>
-                <button type="button">画像を選択する</button>
+                <input type="file" id="item_image" name="item_image" accept="image/*" required hidden>
+                <button type="button" id="image-select-btn">画像を選択する</button>
+                <span id="file-name-display"></span>
             </div>
             @error('item_image')
             <p class="error">{{ $message }}</p>
@@ -78,6 +79,15 @@
 </div>
 
 <script>
+    document.getElementById("image-select-btn").addEventListener("click", function() {
+        document.getElementById("item_image").click();
+    });
+
+    document.getElementById("item_image").addEventListener("change", function() {
+        let fileName = this.files.length > 0 ? this.files[0].name : "選択されていません";
+        document.getElementById("file-name-display").textContent = fileName;
+    });
+
     document.querySelectorAll('.category-btn').forEach(function(button) {
         button.addEventListener('click', function() {
             var categoryId = this.getAttribute('data-category-id');
