@@ -3,9 +3,8 @@
 @section('main')
 <div class="profile-content">
     <h1 class="form-ttl">プロフィール設定</h1>
-    <form action="{{ route('profile.update', ['source' => $source]) }}" method="POST" enctype="multipart/form-data">
+    <form action="{{ route('profile.update') }}" method="post">
         @csrf
-        @method('PUT')
         <div class="form-group">
             <label for="avatar">ユーザー画像</label>
             <input type="file" id="avatar" name="avatar">

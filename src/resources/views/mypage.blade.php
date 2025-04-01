@@ -6,7 +6,7 @@
         <img src="{{ asset('storage/' . $user->avatar) }}" alt="プロフィール画像" class="profile-image">
         <div class="profile-info">
             <h2>{{ $user->name }}</h2>
-            <a href="{{ route('profile.update') }}" class="edit-profile-btn">プロフィールを編集</a>
+            <a href="{{ route('profile.edit') }}" class="edit-profile-btn">プロフィールを編集</a>
         </div>
     </div>
     <hr>

@@ -7,7 +7,16 @@
             <input type="text" placeholder="なにをお探しですか？">
         </div>
         <nav class="header-nav">
-            <a href="{{ route('login') }}">{{ Auth::check() ? 'ログアウト' : 'ログイン' }}</a>
+            @if(Auth::check())
+            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                @csrf
+            </form>
+            <a href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                ログアウト
+            </a>
+            @else
+            <a href="{{ route('login') }}">ログイン</a>
+            @endif
             <a href="{{ Auth::check() ? route('mypage') : route('login') }}">マイページ</a>
             <a href="{{ Auth::check() ? route('sell') : route('login') }}">出品</a>
         </nav>

@@ -41,7 +41,7 @@ class TradeController extends Controller
 
         $item->categories()->attach($request->category);
 
-        return redirect()->route('profile');
+        return redirect()->route('mypage');
     }
 
     public function showPurchaseForm($item_id)
