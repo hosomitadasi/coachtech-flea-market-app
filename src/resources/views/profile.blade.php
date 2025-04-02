@@ -7,6 +7,7 @@
         @csrf
         <div class="form-group">
             <label for="avatar">ユーザー画像</label>
+            <img src="{{ asset('storage/' . $user->avatar) }}" alt="プロフィール画像" class="profile-image">
             <input type="file" id="avatar" name="avatar">
             @error('avatar')
             <p class="error">{{ $message }}</p>

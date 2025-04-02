@@ -3,8 +3,8 @@
 @section('main')
 <main class="main">
     <div class="profile-header">
-        <img src="{{ asset('storage/' . $user->avatar) }}" alt="プロフィール画像" class="profile-image">
         <div class="profile-info">
+            <img src="{{ asset('storage/' . $user->avatar) }}" alt="プロフィール画像" class="profile-image">
             <h2>{{ $user->name }}</h2>
             <a href="{{ route('profile.edit') }}" class="edit-profile-btn">プロフィールを編集</a>
         </div>
@@ -17,7 +17,7 @@
     <div id="sold" class="product-list active">
         @foreach($soldItems as $item)
         <div class="product-item">
-            <img src="{{ asset('storage/' . $item->image_url) }}" alt="商品画像">
+            <img src="{{ asset('storage/' . $item->image_url) }}" alt="商品画像" class="product-image">
             <p>{{ $item->name }}</p>
         </div>
         @endforeach
@@ -25,7 +25,7 @@
     <div id="purchased" class="product-list">
         @foreach($purchasedItems as $item)
         <div class="product-item">
-            <img src="{{ asset('storage/' . $item->image_url) }}" alt="商品画像">
+            <img src="{{ asset('storage/' . $item->image_url) }}" alt="商品画像" class="product-image">
             <p>{{ $item->name }}</p>
         </div>
         @endforeach

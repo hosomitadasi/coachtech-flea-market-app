@@ -56,6 +56,7 @@
             <div class="comment-list">
                 @foreach ($item->comments as $comment)
                 <div class="comment">
+                    <img src="{{ asset('storage/' . $comment->user->avatar) }}" alt="ユーザー画像" class="comment-user-image">
                     <p>{{ $comment->content }}</p>
                 </div>
                 @endforeach

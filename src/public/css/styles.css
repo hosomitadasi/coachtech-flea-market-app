@@ -200,8 +200,9 @@ css body {
     width: 24px;
     height: 24px;
     margin-right: 5px;
+    padding: 0;
     border: none;
-    background: transparent;
+    background: none;
 }
 
 .purchase-btn {
@@ -226,6 +227,14 @@ css body {
 
 .comment-list {
     margin-top: 20px;
+}
+
+.comment-user-image {
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 1px solid #aaa;
 }
 
 .comment {
@@ -302,7 +311,7 @@ css body {
     margin-top: 20px;
 }
 
-/** profile **/
+/** mypage **/
 .profile-container {
     width: 1512px;
     height: 982px;
@@ -322,6 +331,14 @@ css body {
     height: 150px;
     border-radius: 50%;
     background-color: #d9d9d9;
+}
+
+.profile-image{
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 2px solid #ccc;
 }
 
 .profile-info .user-name {
@@ -394,6 +411,10 @@ css body {
     border-radius: 4px;
 }
 
+.product-image{
+
+}
+
 .product-name {
     width: 290px;
     height: 30px;
@@ -404,7 +425,7 @@ css body {
     margin-top: 10px;
 }
 
-/** edit **/
+/** profile **/
 .profile-content {
     width: 680px;
     height: 1229px;
