@@ -36,7 +36,3 @@ Laravel環境構築
 
 ・mysql:8.0.26
 
-## ER図
-
-![ER図](https://github.com/hosomitadasi/coachtech-flea-market-app/blob/main/src/public/img/index.drawio.png?raw=true)
-
