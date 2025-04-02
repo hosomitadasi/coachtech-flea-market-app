@@ -38,3 +38,5 @@ Laravel環境構築
 
 ## ER図
 
+![ER Diagram](public/img/index.drawio.png)
+
