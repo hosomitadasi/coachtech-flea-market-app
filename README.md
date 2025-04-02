@@ -38,5 +38,5 @@ Laravel環境構築
 
 ## ER図
 
-![ER図](./src/public/img/index.drawio.png)
+![ER図](https://github.com/hosomitadasi/coachtech-flea-market-app/blob/main/src/public/img/index.drawio.png?raw=true)
 
