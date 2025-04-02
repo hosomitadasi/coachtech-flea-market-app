@@ -38,5 +38,5 @@ Laravel環境構築
 
 ## ER図
 
-![ER Diagram](src/public/img/index.drawio.png)
+![ER図](./src/public/img/index.drawio.png)
 
